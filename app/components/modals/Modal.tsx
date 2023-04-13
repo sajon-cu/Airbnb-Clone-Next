@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from "react"
+import { IoMdClose } from "react-icons/io"
+import Button from "../Button"
 
 interface ModalProps {
   isOpen?: boolean
@@ -9,10 +11,10 @@ interface ModalProps {
   title?: string
   body?: string
   footer?: string
-  actionLabel?: string
-  dissabled?: boolean
-  secondaryLabel?: string
-  secondaryAction: () => void
+  actionLabel: string
+  disabled?: boolean
+  secondaryActionLabel?: string
+  secondaryAction?: () => void
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -23,18 +25,19 @@ const Modal: React.FC<ModalProps> = ({
   body,
   footer,
   actionLabel,
-  dissabled,
-  secondaryLabel,
+  disabled,
+  secondaryActionLabel,
   secondaryAction,
 }) => {
   const [showModal, setShowModal] = useState(isOpen)
 
+  console.log(showModal)
   useEffect(() => {
     setShowModal(isOpen)
   }, [isOpen])
 
   const handleCloseModal = useCallback(() => {
-    if (dissabled) {
+    if (disabled) {
       return
     }
 
@@ -42,29 +45,29 @@ const Modal: React.FC<ModalProps> = ({
     setTimeout(() => {
       onClose()
     }, 300)
-  }, [dissabled, onClose])
+  }, [disabled, onClose])
 
   const handleSubmit = useCallback(() => {
-    if (dissabled) {
+    if (disabled) {
       return
     }
 
     onSubmit()
-  }, [dissabled, onSubmit])
+  }, [disabled, onSubmit])
 
   const handleSecondaryAction = useCallback(() => {
-    if (dissabled || !secondaryAction) {
+    if (disabled || !secondaryAction) {
       return
     }
 
     secondaryAction()
-  }, [dissabled, secondaryAction])
+  }, [disabled, secondaryAction])
 
   if (!isOpen) return null
 
   return (
     <>
-      <div className="text-white flex justify-center overflow-y-auto overflow-x-hidden fixed outline-none focus:outline-none inset-0 z-50 bg-neutral-800/70">
+      <div className="flex justify-center items-center overflow-y-auto overflow-x-hidden fixed outline-none focus:outline-none inset-0 z-50 bg-neutral-800/70">
         <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
           {/* CONTENT */}
           <div
@@ -84,16 +87,39 @@ const Modal: React.FC<ModalProps> = ({
               md:h-auto
               border-0
               rounded-lg
-              showdow-lg
+              shawdow-lg
               relative
               flex
               flex-col
               w-full
               bg-white
-              outline-one
-              focus:outline-one
+              outline-none
+              focus:outline-none
             "
-            ></div>
+            >
+              {/** HEADER **/}
+              <div className="flex items-center p-6 justify-center relative border-b-[1px]">
+                <button className="border-0 p-1 absolute left-9 hover:opacity-70">
+                  <IoMdClose size={18} />
+                </button>
+                <div className="text-lg font-semibold">{title}</div>
+              </div>
+
+              {/** BODY **/}
+              <div className="relative p-6 flex-auto">
+                here is where our body gose into
+              </div>
+              {/** FOOTER **/}
+              <div className="flex justify-between gap-3 p-6">
+                {secondaryAction && secondaryActionLabel && (
+                  <Button
+                    label={secondaryActionLabel}
+                    onClick={handleSecondaryAction}
+                  />
+                )}
+                <Button disabled={disabled} label={actionLabel} onClick={handleSubmit} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
