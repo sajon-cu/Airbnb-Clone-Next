@@ -1,16 +1,25 @@
-"use client"
+"use client";
 
-import React, { useCallback, useState } from "react"
-import { AiOutlineMenu } from "react-icons/ai"
-import Avatar from "../Avatar"
-import MenuItem from "./MenuItem"
+import React, { useCallback, useState } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
+import Avatar from "../Avatar";
+import MenuItem from "./MenuItem";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import { User } from "@prisma/client";
 
-const UserMenu = () => {
-  const [isOpen, setIsOpen] = useState(false)
+interface UserMenuProps {
+  currentUser?: User | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
 
   const toggleOpen = useCallback(() => {
-    setIsOpen((value) => !value)
-  }, [])
+    setIsOpen((value) => !value);
+  }, []);
 
   return (
     <div className="relative">
@@ -32,13 +41,33 @@ const UserMenu = () => {
       {isOpen && (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
-            <MenuItem onClick={() => {}} label="Login" />
-            <MenuItem onClick={() => {}} label="Sign up" />
+            {currentUser ? (
+              <>
+                <MenuItem onClick={() => {}} label="My trips" />
+                <MenuItem onClick={() => {}} label="My Fovorites" />
+                <MenuItem onClick={() => {}} label="My Reservations" />
+                <MenuItem onClick={() => {}} label="My Properties" />
+                <MenuItem onClick={() => {}} label="Airbnb my home" />
+                <hr />
+                <MenuItem onClick={() => {}} label="Log out" />
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={loginModal.onOpen} label="Login" />
+                <MenuItem
+                  onClick={() => {
+                    setIsOpen(false);
+                    registerModal.onOpen();
+                  }}
+                  label="Sign up"
+                />
+              </>
+            )}
           </div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default UserMenu
+export default UserMenu;

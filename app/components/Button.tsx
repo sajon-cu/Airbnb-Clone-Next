@@ -1,12 +1,14 @@
-"use client"
-import React from "react"
+"use client";
+import React from "react";
+import { IconType } from "react-icons";
 
 interface ButtonProps {
-  label: string
-  disabled?: boolean
-  outline?: boolean
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
-  small?: boolean
+  label: string;
+  disabled?: boolean;
+  outline?: boolean;
+  icon?: IconType;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  small?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,10 +17,12 @@ const Button: React.FC<ButtonProps> = ({
   outline,
   small,
   onClick,
+  icon: Icon,
 }) => {
   return (
     <button
       disabled={disabled}
+      onClick={onClick}
       className={`
         dissabled:opacity-70
         dissabled:cursor-not-allowed
@@ -34,9 +38,18 @@ const Button: React.FC<ButtonProps> = ({
         ${small ? "border-[1px]" : "border-2"}
       `}
     >
+      {Icon && (
+        <Icon
+          size={24}
+          className="
+            absolute
+            left-4
+          "
+        />
+      )}
       {label}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
