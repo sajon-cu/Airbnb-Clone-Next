@@ -42,6 +42,7 @@ const LoginModal = () => {
       }
 
       if (callback?.error) {
+        setIsLoading(false);
         toast.error(callback.error);
       }
     });
@@ -80,7 +81,7 @@ const LoginModal = () => {
         label="Continue with Google"
         icon={FcGoogle}
         onClick={() => {
-          /*signIn('google')*/
+          signIn("google");
         }}
       />
 
@@ -89,7 +90,7 @@ const LoginModal = () => {
         label="Continue with Github"
         icon={AiFillGithub}
         onClick={() => {
-          /*signIn('google')*/
+          signIn("github");
         }}
       />
 

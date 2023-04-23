@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import React, { useCallback, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -85,7 +86,7 @@ const RegisterModal = () => {
         label="Continue with Google"
         icon={FcGoogle}
         onClick={() => {
-          /*signIn('google')*/
+          signIn("google");
         }}
       />
 
@@ -94,7 +95,7 @@ const RegisterModal = () => {
         label="Continue with Github"
         icon={AiFillGithub}
         onClick={() => {
-          /*signIn('google')*/
+          signIn("github");
         }}
       />
 
