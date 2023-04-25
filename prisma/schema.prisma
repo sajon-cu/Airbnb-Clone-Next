@@ -54,6 +54,7 @@ model Listing {
   roomCount     Int
   bathroomCount Int
   guestCount    Int
+  price         Int
   locationValue String
   userId        String   @db.ObjectId
   createdAt     DateTime @default(now())

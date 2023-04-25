@@ -8,6 +8,12 @@ body,
   width: 100%;
 }
 
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
 /*:root {
   --max-width: 1100px;
   --border-radius: 12px;

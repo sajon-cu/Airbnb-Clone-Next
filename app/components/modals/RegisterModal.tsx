@@ -12,10 +12,12 @@ import Heading from "../Heading";
 import Button from "../Button";
 import Input from "../Input";
 import axios from "axios";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
 
   const {
     register,
@@ -77,6 +79,11 @@ const RegisterModal = () => {
     </div>
   );
 
+  const handleToggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
+
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3 relative">
       <hr />
@@ -101,7 +108,10 @@ const RegisterModal = () => {
 
       <div className="flex flex-row justify-center items-center gap-2">
         <div>Already have an account?</div>
-        <div className="text-neutral-800 cursor-pointer hover:underline">
+        <div
+          onClick={handleToggle}
+          className="text-neutral-800 cursor-pointer hover:underline"
+        >
           Log in
         </div>
       </div>

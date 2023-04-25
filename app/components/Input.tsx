@@ -26,7 +26,19 @@ const Input: React.FC<InputProps> = ({
   register,
 }) => {
   return (
-    <div>
+    <div className="w-full relative">
+      {formatPrice && (
+        <BiDollar
+          size={24}
+          className="
+            text-neutral-700
+            absolute
+            left-2
+            top-[50%]
+            translate-y-[-50%]
+          "
+        />
+      )}
       <input
         id={id}
         disabled={disabled}
